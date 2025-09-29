@@ -1,0 +1,309 @@
+:root {
+    --bg-main: #f0f4f8;
+    --surface: #ffffff;
+    --font-color: #0a0a0a;
+    --white: #ffffff;
+    --secondary: #1E90FF;
+    --muted: #555555;
+    --primary: #FF0000;
+    --primary-600: #CC0000;
+    --shadow-soft: 0 5px 15px rgba(0,0,0,0.1);
+    --radius: 12px;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg-main);
+    color: var(--font-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+.header-carrinho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+    z-index: 100;
+}
+
+/* Botão voltar */
+.botao-voltar {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+.botao-voltar:hover { background: var(--primary-600); }
+
+/* Ícone do carrinho */
+.carrinho-flutuante {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--primary);
+    color: var(--white);
+    padding: 0.5rem 0.8rem;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.carrinho-flutuante:hover { background: var(--primary-600); }
+
+.quantidade-carrinho {
+    font-weight: 600;
+    font-size: 0.85rem;
+    background: var(--secondary);
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* ===========================
+   CONTAINER
+   =========================== */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===========================
+   TABELA DO CARRINHO
+   =========================== */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 1rem;
+    table-layout: fixed; /* garante alinhamento colunas */
+}
+
+/* Cabeçalho fixo */
+.cart-table thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Corpo rolável com limite de 3 itens */
+#itens-carrinho {
+    display: block;
+    max-height: 220px; /* ~3 itens */
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* IE/Edge */
+    scrollbar-width: none;     /* Firefox */
+}
+#itens-carrinho::-webkit-scrollbar { display: none; }
+
+/* Cada linha respeita o alinhamento */
+#itens-carrinho tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 0.8rem;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+/* Larguras específicas para melhor alinhamento */
+.cart-table th:nth-child(1),
+.cart-table td:nth-child(1) {
+    width: 50%; /* mais espaço p/ descrição */
+}
+
+.cart-table th:nth-child(2),
+.cart-table td:nth-child(2) {
+    width: 15%;
+    text-align: center;
+}
+
+.cart-table th:nth-child(3),
+.cart-table td:nth-child(3) {
+    width: 20%;
+    text-align: center;
+}
+
+.cart-table th:nth-child(4),
+.cart-table td:nth-child(4) {
+    width: 15%;
+    text-align: center;
+}
+
+.cart-table th {
+    background: var(--primary);
+    color: var(--white);
+    font-weight: 600;
+}
+
+.cart-table td img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+.nome-item { 
+    font-weight: 500; 
+    display: inline-block;
+    white-space: nowrap;       /* mantém em uma linha */
+    overflow: hidden;          /* oculta excesso */
+    text-overflow: ellipsis;   /* adiciona "..." se passar do limite */
+    max-width: 95%;            /* evita quebra fora da célula */
+}
+
+/* Inputs */
+.quantidade-input {
+    width: 50px;
+    padding: 0.3rem;
+    border-radius: var(--radius);
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.quantidade-input:focus {
+    outline: none;
+    border-color: var(--secondary);
+}
+
+/* Botão remover */
+.botao-remover {
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+}
+.botao-remover:hover { color: var(--primary-600); }
+
+/* ===========================
+   RODAPÉ DO CARRINHO
+   =========================== */
+.carrinho-rodape {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+.total {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--secondary);
+    text-align: center;
+}
+
+.botao-finalizar {
+    padding: 0.8rem 1.5rem;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+}
+.botao-finalizar:hover { background: var(--primary-600); }
+
+/* ===========================
+   FOOTER
+   =========================== */
+.rodape {
+    text-align: center;
+    padding: 0.5rem;
+    background: #333;
+    color: var(--white);
+    font-size: 0.85rem;
+    margin-top: auto;
+}
+
+/* ===========================
+   MENSAGEM FINALIZAÇÃO
+   =========================== */
+.mensagem-finalizacao {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    width: 90%;
+    max-width: 350px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 9999;
+}
+.mensagem-finalizacao.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ===========================
+   RESPONSIVIDADE
+   =========================== */
+@media (max-width: 768px) {
+    .cart-table td img { width: 40px; height: 40px; }
+    .quantidade-input { width: 45px; }
+
+    .cart-table th:nth-child(1),
+    .cart-table td:nth-child(1) {
+        width: 55%; /* ainda mais espaço no mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .carrinho-rodape {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .nome-item {
+        max-width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

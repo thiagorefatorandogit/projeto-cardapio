@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho - Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="carrinho2.css">
+</head>
+<body>
+  <!-- Header com botões -->
+  <header class="header-carrinho">
+    <a href="index.html"><button class="botao-voltar"><i class="fas fa-arrow-left"></i> Voltar</button></a>
+    <div class="carrinho-flutuante">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="quantidade-carrinho">0</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Seu Carrinho</h2>
+
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+          <th>Preço</th>
+          <th>Remover</th>
+        </tr>
+      </thead>
+      <tbody id="itens-carrinho">
+        <tr class="item-carrinho" data-preco="34.90">
+          <td><img src="img/smash-burger.jpg" alt="Smash Burger"> <span class="nome-item">Smash Burger Artesanal</span></td>
+          <td><input type="number" class="quantidade-input" value="1" min="1"></td>
+          <td>R$ 34,90</td>
+          <td><button class="botao-remover"><i class="fas fa-trash"></i></button></td>
+        </tr>
+        <tr class="item-carrinho" data-preco="29.90">
+          <td><img src="img/salada-mediterranea.jpg" alt="Salada Mediterrânea"> <span class="nome-item">Salada Mediterrânea</span></td>
+          <td><input type="number" class="quantidade-input" value="1" min="1"></td>
+          <td>R$ 29,90</td>
+          <td><button class="botao-remover"><i class="fas fa-trash"></i></button></td>
+        </tr>
+        <tr class="item-carrinho" data-preco="49.90">
+          <td><img src="img/risoto.jpg" alt="Risoto de Cogumelos"> <span class="nome-item">Risoto de Cogumelos</span></td>
+          <td><input type="number" class="quantidade-input" value="1" min="1"></td>
+          <td>R$ 49,90</td>
+          <td><button class="botao-remover"><i class="fas fa-trash"></i></button></td>
+        </tr>
+        <tr class="item-carrinho" data-preco="39.90">
+          <td><img src="img/nhoque.png" alt="Nhoque ao Sugo"> <span class="nome-item">Nhoque ao Sugo</span></td>
+          <td><input type="number" class="quantidade-input" value="1" min="1"></td>
+          <td>R$ 39,90</td>
+          <td><button class="botao-remover"><i class="fas fa-trash"></i></button></td>
+        </tr>
+        <tr class="item-carrinho" data-preco="69.90">
+          <td><img src="img/file.jpg" alt="Filé ao Poivre"> <span class="nome-item">Filé ao Poivre</span></td>
+          <td><input type="number" class="quantidade-input" value="1" min="1"></td>
+          <td>R$ 69,90</td>
+          <td><button class="botao-remover"><i class="fas fa-trash"></i></button></td>
+        </tr>
+        <tr class="item-carrinho" data-preco="24.90">
+          <td><img src="img/cheesecake.jpg" alt="Cheesecake"> <span class="nome-item">Cheesecake</span></td>
+          <td><input type="number" class="quantidade-input" value="1" min="1"></td>
+          <td>R$ 24,90</td>
+          <td><button class="botao-remover"><i class="fas fa-trash"></i></button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="carrinho-rodape">
+      <div class="total">Total: R$ <span id="total-carrinho">0.00</span></div>
+      <button class="botao-finalizar">Finalizar Compra</button>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p>&copy; <span id="ano-atual"></span> Sabor Brasileiro. Todos os direitos reservados.</p>
+  </footer>
+
+  <div class="mensagem-finalizacao" id="mensagem-finalizacao">
+    <h3>Compra concluída com sucesso!</h3>
+    <p>Obrigado por escolher o Sabor Brasileiro. Seu pedido está a caminho!</p>
+  </div>
+
+  <script>
+    // Atualiza ano automaticamente no rodapé
+document.getElementById("ano-atual").textContent = new Date().getFullYear();
+
+const itensCarrinho = document.getElementById('itens-carrinho');
+const totalCarrinho = document.getElementById('total-carrinho');
+const quantidadeCarrinho = document.querySelector('.quantidade-carrinho');
+const botaoFinalizar = document.querySelector('.botao-finalizar');
+const mensagemFinalizacao = document.getElementById('mensagem-finalizacao');
+
+// Função para atualizar total e contagem
+function atualizarCarrinho() {
+    const itens = itensCarrinho.querySelectorAll('.item-carrinho');
+    let total = 0;
+    let totalItens = 0;
+
+    itens.forEach(item => {
+        const preco = parseFloat(item.dataset.preco);
+        const quantidadeInput = item.querySelector('.quantidade-input');
+        const quantidade = parseInt(quantidadeInput.value);
+        const celulaTotal = item.querySelector('td:nth-child(3)');
+        celulaTotal.textContent = `R$ ${(preco * quantidade).toFixed(2)}`;
+        total += preco * quantidade;
+        totalItens += quantidade;
+    });
+
+    totalCarrinho.textContent = total.toFixed(2);
+    quantidadeCarrinho.textContent = totalItens;
+}
+
+// Listener de quantidade
+itensCarrinho.querySelectorAll('.quantidade-input').forEach(input => {
+    input.addEventListener('input', () => {
+        if(input.value < 1) input.value = 1;
+        atualizarCarrinho();
+    });
+});
+
+// Botão remover item
+itensCarrinho.querySelectorAll('.botao-remover').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const item = e.target.closest('.item-carrinho');
+        item.remove();
+        atualizarCarrinho();
+    });
+});
+
+// Inicializa contagem
+atualizarCarrinho();
+
+// Finalizar compra
+botaoFinalizar.addEventListener('click', () => {
+    if(itensCarrinho.children.length === 0) return; // Nenhum item
+    mensagemFinalizacao.classList.add('show');
+    setTimeout(() => {
+        mensagemFinalizacao.classList.remove('show');
+    }, 4000);
+});
+
+  </script>
+</body>
+</html>
+
+
