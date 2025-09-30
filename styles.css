@@ -1,0 +1,577 @@
+ :root {
+  /* Fundos e superfícies */ /* Seção de variáveis: cores base do layout */
+  --bg-top: #1b1b1b;       /* Header e Footer escuros */ /* variável: cor do topo (header/footer) */
+  --bg-main: #f5f5f5;      /* Fundo claro da página */ /* variável: cor de fundo principal */
+  --surface: #ffffff;      /* Cards brancos, clean */ /* variável: cor das superfícies/cards */
+
+  /* Texto */ /* Cores de texto e destaque */
+  --font-color: #f5f5f5;   /* Textos claros para contraste com fundo escuro */ /* variável: cor de texto principal clara */
+  --white: #ffffff; /* variável: branco reutilizável */
+  --secondary: #ff3b3f;    /* Vermelho vibrante para destaque */ /* variável: cor secundária/destaque */
+  --muted: #555555;        /* Cinza suave para subtítulos */ /* variável: texto secundário */
+
+  /* Botões e interações */ /* Variáveis para estados dos botões */
+  --primary: #ff3b3f;      /* Botões vermelhos */ /* variável: cor principal de botões */
+  --primary-600: #cc2b33;  /* Vermelho mais escuro para hover */ /* variável: cor de hover */
+  --btn-card: #ff3b3f;     /* Botões dentro dos cards em vermelho */ /* variável: cor específica para botões de card */
+
+  /* Sombras e efeitos */ /* Sombreamento e ring para foco */
+  --shadow-soft: 0 5px 15px rgba(0,0,0,0.1); /* sombra padrão */
+  --ring: 0 0 0 3px rgba(255,59,63,0.3); /* efeito de foco/outline */
+
+  /* Bordas e cantos */ /* Radius padrão */
+  --radius: 16px; /* borda arredondada padrão */
+
+ --logo-green: #009739;   /* Verde */ /* cor 1 do logo animado */
+  --logo-yellow: #FFCC00;  /* Amarelo */ /* cor 2 do logo animado */
+  --logo-blue: #002776;    /* Azul */ /* cor 3 do logo animado */
+  --logo-white: #FFFFFF;   /* Branco */ /* cor 4 do logo animado */
+  --logo-shadow: rgba(0,0,0,0.4); /* sombra usada no texto do logo */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* garante box-sizing consistente */ 
+  margin: 0; /* zera margens padrão do navegador */
+  padding: 0; /* zera paddings padrão do navegador */
+}
+
+html, body {
+  height: 100%; /* garante que o body ocupe toda a altura */
+  font-family: 'Poppins', sans-serif; /* fonte base do site */
+  background-color: var(--bg-main); /* aplica cor de fundo global */
+  color: #1b1b1b; /* cor de texto padrão (contrasta com bg claro) */
+  overflow-x: hidden; /* previne rolagem horizontal indesejada */
+}
+
+/* ================================
+   HEADER
+   ================================ */
+.header {
+  display: flex; /* usa flexbox para layout horizontal */
+  justify-content: space-between; /* separa conteúdo (logo / nav) */
+  align-items: center; /* alinha verticalmente ao centro */
+  padding: 1rem 2rem; /* espaçamento interno do header */
+  background: var(--bg-top); /* usa variável de cor do topo */
+  box-shadow: var(--shadow-soft); /* sombra suave do topo */
+  position: sticky; /* mantém o header fixo no topo ao rolar */
+  top: 0; /* ponto de fixação sticky */
+  z-index: 50; /* garante que fique acima de outros elementos */
+}
+
+.header-content {
+  display: flex; /* container flex para logo + outros elementos */
+  align-items: center; /* centraliza verticalmente */
+  gap: 1rem; /* espaçamento entre itens */
+}
+
+.header-content p {
+  font-family: 'Playfair Display', serif; /* fonte estilizada para logo/texto */
+  font-weight: 900; /* peso forte para destaque */
+  font-size: clamp(2rem, 6vw, 3rem); /* tamanho responsivo do texto do logo */
+  letter-spacing: 4px; /* espaçamento entre letras */
+  text-transform: uppercase; /* transforma em maiúsculas */
+  text-shadow: 2px 2px 8px var(--logo-shadow); /* sombra no texto do logo */
+  margin: 0; /* remove margem padrão do <p> */
+  animation: colorCycleP 4s infinite; /* animação cíclica de cores no <p> */
+}
+
+.header-content p span {
+  font-weight: 700; /* peso menor no span para contraste */
+  animation: colorCycleSpan 4s infinite; /* animação cíclica separada para o span */
+}
+
+/* Animação do <p> */
+@keyframes colorCycleP {
+  0%   { color: var(--logo-green); } /* início: verde */
+  25%  { color: var(--logo-yellow); } /* 25%: amarelo */
+  50%  { color: var(--logo-blue); } /* 50%: azul */
+  75%  { color: var(--logo-white); } /* 75%: branco */
+  100% { color: var(--logo-green); } /* volta ao início */
+}
+
+/* Animação do <span> com deslocamento de 50% */
+@keyframes colorCycleSpan {
+  0%   { color: var(--logo-yellow); } /* início do ciclo do span */
+  25%  { color: var(--logo-blue); }
+  50%  { color: var(--logo-white); }
+  75%  { color: var(--logo-green); }
+  100% { color: var(--logo-yellow); } /* fecha o ciclo */
+}
+
+.nav {
+  display: flex; /* menu principal em linha (desktop) */
+  align-items: center; /* centraliza itens do menu */
+  gap: 1.5rem; /* espaçamento entre links */
+}
+
+.nav a {
+  text-decoration: none; /* remove sublinhado padrão */
+  color: var(--white); /* cor dos links no header */
+  font-weight: 500; /* peso médio para legibilidade */
+  transition: color 0.3s; /* transição suave ao hover */
+}
+
+.nav a:hover {
+  color: var(--primary); /* muda cor no hover para destaque */
+}
+
+.nav_toggle {
+  display: none; /* botão de menu mobile escondido no desktop */
+  font-size: 1.8rem; /* tamanho do ícone/botão */
+  background: none; /* sem fundo por padrão */
+  border: none; /* sem borda */
+  color: var(--white); /* cor do botão */
+  cursor: pointer; /* indica interatividade (JS aciona) */
+}
+
+/* ================================
+   HERO (Banner Tela Cheia)
+   ================================ */
+.hero {
+  position: relative; /* contexto para overlays e slides */
+  height: 100vh; /* ocupa toda a altura da viewport */
+  width: 100vw; /* ocupa toda a largura da viewport */
+  display: flex; /* centraliza conteúdo do hero */
+  align-items: center; /* centra verticalmente */
+  justify-content: center; /* centra horizontalmente */
+  text-align: center; /* texto centralizado */
+  overflow: hidden; /* evita overflow de imagens/animacoes */
+}
+
+.hero .overlay {
+  position: absolute; /* overlay posicionado sobre o hero */
+  inset: 0; /* cobre todo o contêiner */
+  background:
+    radial-gradient(1000px 500px at 20% 20%, rgba(255, 59, 63, 0.25), transparent 50%), /* efeito decorativo */
+    radial-gradient(1200px 600px at 80% 80%, rgba(255, 59, 63, 0.18), transparent 50%); /* segundo gradiente */
+  z-index: 1; /* atrás do conteúdo principal */
+  pointer-events: none; /* não bloqueia clicks (decorativo) */
+}
+
+.container-hero_content {
+  position: relative; /* ele fica acima do overlay */
+  z-index: 2; /* garante que texto e botões fiquem visíveis */
+  max-width: 800px; /* largura máxima do conteúdo central */
+  color: var(--white); /* texto do hero em branco */
+}
+
+.hero_title {
+  font-family: 'Playfair Display', serif; /* fonte elegante para título */
+  font-weight: 700; /* peso alto para destaque */
+  font-size: clamp(2.5rem, 6vw, 4rem); /* responsivo com clamp */
+  line-height: 1.1; /* altura de linha reduzida */
+  margin-bottom: 1rem; /* espaçamento abaixo do título */
+}
+
+.hero_subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem); /* subtítulo responsivo */
+  margin-bottom: 2rem; /* espaçamento para botões/CTA */
+  color: var(--white); /* cor do subtítulo */
+}
+
+/* ================================
+   SLIDER COM FADE + ZOOM
+   ================================ */
+.slide-container {
+  position: absolute; /* container do slider ocupando o hero */
+  inset: 0; /* cobre todo o contêiner */
+  width: 100%; /* largura total */
+  height: 100%; /* altura total */
+  overflow: hidden; /* esconde overflow das imagens */
+}
+
+.slide-container img.slide {
+  position: absolute; /* imagens empilhadas umas sobre as outras */
+  top: 0; /* alinhamento ao topo */
+  left: 0; /* alinhamento à esquerda */
+  width: 100%; /* ocupa largura total */
+  height: 100%; /* ocupa altura total */
+  object-fit: cover; /* recorta mantendo proporção */
+  opacity: 0; /* escondidas por padrão */
+  transition: opacity 1.5s ease-in-out; /* fade entre imagens */
+  z-index: 0; /* atrás do texto */
+  transform: scale(1); /* estado base do zoom */
+}
+
+.slide-container img.slide.active {
+  opacity: 1; /* imagem ativa visível */
+  z-index: 1; /* traz a imagem ativa para frente */
+  animation: zoomEffect 6s ease-in-out forwards; /* anima zoom quando ativa */
+}
+
+@keyframes zoomEffect {
+  0% { transform: scale(1); } /* início sem zoom */
+  100% { transform: scale(1.07); } /* leve zoom ao final */
+}
+
+@media (max-width: 768px) {
+  .slide-container img.slide.active {
+    animation: zoomEffectMobile 6s ease-in-out forwards; /* versão mobile do zoom */
+  }
+}
+
+@keyframes zoomEffectMobile {
+  0% { transform: scale(1); } /* mobile inicia sem zoom */
+  100% { transform: scale(1.05); } /* zoom reduzido em mobile */
+}
+
+.hero-text {
+  position: absolute; /* texto posicionado sobre as imagens */
+  top: 50%; /* centraliza verticalmente */
+  left: 50%; /* centraliza horizontalmente */
+  transform: translate(-50%, -50%); /* técnica de centralização */
+  color: var(--white); /* texto branco do hero */
+  text-align: center; /* centraliza linhas de texto */
+  z-index: 3; /* sempre acima de overlays e imagens */
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.6); /* sombra para legibilidade */
+}
+
+/* ================================
+   BOTÕES
+   ================================ */
+.btn {
+  display: inline-block; /* comportamento inline com dimensões */
+  padding: 0.8rem 1.5rem; /* espaçamento interno do botão */
+  border-radius: var(--radius); /* cantos arredondados */
+  background: var(--primary); /* cor de fundo do botão */
+  color: var(--white); /* cor do texto do botão */
+  text-decoration: none; /* remove sublinhado se for link */
+  font-weight: 600; /* peso do texto do botão */
+  transition: all 0.3s; /* transição suave para hover e transform */
+  border: none; /* remove borda padrão */
+  cursor: pointer; /* indica que é clicável (JS pode ouvir clicks) */
+}
+
+.btn:hover {
+  background: var(--primary-600); /* altera cor no hover */
+  transform: scale(1.05); /* leve aumento para feedback visual */
+}
+
+.btn--lg {
+  font-size: 1.1rem; /* variante grande */
+}
+
+.btn--sm {
+  padding: 0.5rem 1rem; /* variante pequena */
+  font-size: 0.9rem; /* tamanho reduzido */
+}
+
+.btn--success {
+  background-color: green !important; /* variante de sucesso forçada */
+  transform: scale(1.05); /* efeito visual imediato */
+}
+
+/* ================================
+   SECTIONS
+   ================================ */
+.menu-section {
+  padding: 4rem 2rem; /* espaçamento interno da seção */
+}
+
+.section_title {
+  font-family: 'Playfair Display', serif; /* título com fonte serif */
+  font-size: 2rem; /* tamanho do título da seção */
+  text-align: center; /* centraliza o título */
+  margin-bottom: 0.5rem; /* espaço abaixo do título */
+  color: var(--primary); /* cor do título em destaque */
+}
+
+.section_subtitle {
+  text-align: center; /* centraliza subtítulo */
+  margin-bottom: 3rem; /* espaço abaixo do subtítulo */
+  color: var(--muted); /* cor de subtítulo menos chamativa */
+  max-width: 600px; /* largura máxima para leitura confortável */
+  margin-inline: auto; /* centraliza horizontalmente */
+}
+
+/* ================================
+   GRID DE CARDS
+   ================================ */
+.grid {
+  display: grid; /* usa grid para layout de cards */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* grade responsiva */
+  gap: 2rem; /* espaçamento entre cards */
+  max-width: 1200px; /* largura máxima do container */
+  margin: 2rem auto 0 auto; /* centraliza o grid na página */
+}
+
+.card {
+  background: var(--surface); /* fundo do card */
+  border-radius: var(--radius); /* cantos arredondados */
+  overflow: hidden; /* esconde overflow interno (bordas arredondadas) */
+  box-shadow: var(--shadow-soft); /* sombra do card */
+  display: flex; /* layout flex dentro do card */
+  flex-direction: column; /* orienta conteúdo em coluna */
+  transition: transform 0.3s, box-shadow 0.3s; /* animação no hover */
+  cursor: pointer; /* indica que o card é interativo (JS pode ligar clique) */
+  height: 100%; /* faz o card crescer para igualar alturas */
+}
+
+.card:hover {
+  transform: translateY(-8px); /* eleva o card no hover */
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4); /* sombra mais pronunciada */
+}
+
+.card_image img {
+  width: 100%; /* imagem ocupa toda largura do card */
+  height: 250px; /* altura fixa para consistência */
+  object-fit: cover; /* mantém proporção e corta o excesso */
+  border-radius: var(--radius) var(--radius) 0 0; /* arredonda apenas topo */
+  transition: transform 0.3s ease; /* transição suave no hover */
+}
+
+.card:hover .card_image img {
+  transform: scale(1.05); /* zoom da imagem quando card em hover */
+}
+
+.card_body {
+  padding: 1.5rem; /* espaçamento interno do corpo do card */
+  display: flex; /* layout flex para conteúdo do card */
+  flex-direction: column; /* itens empilhados verticalmente */
+  gap: 0.75rem; /* espaçamento entre elementos do corpo */
+  flex-grow: 1; /* permite que o corpo cresça e preencha espaço */
+}
+
+.card_title {
+  font-family: 'Playfair Display', serif; /* fonte do título do card */
+  font-size: 1.4rem; /* tamanho do título */
+  color: var(--primary); /* cor do título em destaque */
+}
+
+.card_desc {
+  font-size: 0.95rem; /* tamanho da descrição */
+  color: #333; /* cor do texto da descrição */
+  flex-grow: 1; /* ocupa espaço disponível para empurrar preço/CTA para baixo */
+}
+
+.card_price {
+  font-weight: 600; /* peso do texto do preço */
+  font-size: 1.1rem; /* tamanho do preço */
+  color: var(--secondary); /* cor do preço */
+}
+
+.card_body .btn-add-cart {
+  width: 100%; /* botão ocupa toda largura do card */
+  margin-top: 1rem; /* espaço acima do botão */
+  background: var(--btn-card); /* cor do botão dentro do card */
+}
+
+.card_body .btn-add-cart:hover {
+  background: var(--primary-600); /* hover do botão do card */
+}
+
+/* ================================
+   CARRINHO
+   ================================ */
+.cart-icon {
+  position: relative; /* necessário para posicionar .cart-count */
+  display: flex; /* layout flex para conteúdo do ícone */
+  align-items: center; /* centraliza ícone verticalmente */
+  justify-content: center; /* centraliza conteúdo horizontalmente */
+  gap: 6px; /* espaçamento interno entre ícone e texto */
+  padding: 8px 12px; /* tampão interno do ícone/carrinho */
+  font-size: 1.4rem; /* tamanho do ícone/texto */
+  color: var(--white); /* cor do ícone */
+  background: var(--primary); /* fundo do botão do carrinho */
+  border-radius: 12px; /* cantos arredondados do botão */
+  box-shadow: var(--shadow-soft); /* sombra suave */
+  transition: all 0.3s ease; /* transições suaves em hover */
+}
+
+.cart-icon:hover {
+  background: var(--primary-600); /* muda cor ao passar o mouse */
+  transform: scale(1.05); /* ligeiro aumento no hover */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* sombra no hover */
+}
+
+.cart-count {
+  font-weight: 600; /* peso do número do contador */
+  font-size: 0.75rem; /* tamanho reduzido para o badge */
+  background: var(--secondary); /* fundo do badge */
+  color: var(--white); /* cor do texto do badge */
+  border-radius: 50%; /* formato circular */
+  min-width: 18px; /* largura mínima do badge */
+  height: 18px; /* altura fixa do badge */
+  display: flex; /* usa flex para centralizar número */
+  align-items: center; /* centraliza verticalmente */
+  justify-content: center; /* centraliza horizontalmente */
+  padding: 0 4px; /* pequeno padding horizontal */
+  position: absolute; /* posicionamento absoluto relativo ao .cart-icon */
+  top: -6px; /* ajusta posição para sobrepor o ícone */
+  right: -6px; /* ajusta posição para sobrepor o ícone */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* sombra leve */
+  /* OBS: valor do contador é atualizado via JS (ex.: innerText ou textContent) */
+}
+
+/* ================================
+   FOOTER COMPLETO
+   ================================ */
+.footer {
+  background: var(--bg-top); /* mesmo tom do header para coerência */
+  color: var(--white); /* texto do footer em branco */
+  padding: 3rem 1.5rem 1rem; /* espaçamento interno do footer */
+  box-shadow: var(--shadow-soft); /* sombra no topo do footer */
+  border-top: 2px solid var(--primary-600); /* destaque superior */
+}
+
+.footer_content {
+  display: grid; /* layout em grid para colunas do footer */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* colunas responsivas */
+  gap: 3rem; /* espaçamento entre colunas */
+  margin-bottom: 2rem; /* espaço abaixo do conteúdo principal do footer */
+  max-width: 1200px; /* largura máxima do container do footer */
+  margin-inline: auto; /* centraliza horizontalmente */
+}
+
+.footer_logo {
+  font-family: 'Playfair Display', serif; /* fonte da marca no footer */
+  font-size: 1.8rem; /* tamanho do logo textual */
+  font-weight: 700; /* peso do logo */
+  color: var(--white); /* cor do logo */
+  display: inline-block; /* exibe como bloco inline */
+}
+
+.footer_brand img {
+  display: flex; /* garante que a imagem siga regras de flexbox se necessário */
+  width: 200px; /* largura fixa para logotipo/imagem */
+}
+
+.footer_slogan {
+  font-size: 0.95rem; /* tamanho do slogan */
+  margin-top: 0.75rem; /* espaçamento acima */
+  color: var(--white); /* cor do texto */
+}
+
+.footer_title {
+  font-size: 1.2rem; /* tamanho do título das colunas do footer */
+  margin-bottom: 1.2rem; /* espaço abaixo do título */
+  color: var(--secondary); /* cor de destaque para títulos do footer */
+  font-weight: 600; /* peso do título */
+}
+
+.footer_nav ul {
+  list-style: none; /* remove marcadores da lista */
+  padding: 0; /* remove padding padrão */
+  display: flex; /* usa flex para empilhar links verticalmente */
+  flex-direction: column; /* coluna para cada link */
+  gap: 0.5rem; /* espaçamento entre links */
+}
+
+.footer_nav a {
+  text-decoration: none; /* remove sublinhado */
+  color: var(--white); /* cor padrão dos links do footer */
+  transition: color 0.3s; /* transição suave no hover */
+}
+
+.footer_nav a:hover {
+  color: var(--primary); /* cor de hover no footer */
+}
+
+.footer_contact p {
+  margin: 0.5rem 0; /* espaçamento vertical entre contatos */
+  color: var(--white); /* cor do texto de contato */
+}
+
+.footer_form {
+  display: flex; /* form em layout flex */
+  flex-direction: column; /* campos empilhados verticalmente */
+  gap: 1.2rem; /* espaçamento entre campos */
+}
+
+.footer_form input,
+.footer_form textarea {
+  padding: 0.7rem; /* espaçamento interno dos inputs */
+  border: 1px solid #555; /* borda neutra */
+  border-radius: var(--radius); /* cantos arredondados nos inputs */
+  background: #333; /* fundo dos inputs escuro para contraste */
+  color: var(--white); /* texto dos inputs em branco */
+  width: 100%; /* ocupa largura do container */
+  font-size: 0.95rem; /* tamanho de fonte dos inputs */
+  transition: border-color 0.3s, box-shadow 0.3s; /* transições úteis para foco/validação */
+}
+
+.footer_form input::placeholder,
+.footer_form textarea::placeholder {
+  color: #ccc; /* cor do placeholder */
+}
+
+.footer_form input:focus,
+.footer_form textarea:focus {
+  outline: none; /* remove outline padrão */
+  border-color: var(--primary); /* borda em destaque no foco */
+  box-shadow: var(--ring); /* ring definido em :root para foco */
+  /* OBS: aqui é um bom ponto para JS validar e adicionar classes de erro/sucesso */
+}
+
+.btn_form {
+  background: var(--primary); /* cor do botão do formulário */
+  color: var(--white); /* texto do botão */
+  padding: 0.8rem; /* espaçamento interno */
+  border-radius: var(--radius); /* cantos arredondados */
+  font-weight: 600; /* peso do texto do botão */
+  cursor: pointer; /* indica clicável */
+  transition: all 0.3s; /* transição suave */
+  width: 100%; /* ocupa largura do container do form */
+}
+
+.btn_form:hover {
+  background: var(--primary-600); /* cor de hover */
+  box-shadow: 0 0 12px var(--shadow-soft); /* sombra no hover */
+}
+
+.footer_bottom {
+  text-align: center; /* centraliza texto e ícones */
+  display: flex; /* layout flex para alinhar verticalmente */
+  flex-direction: column; /* itens empilhados */
+  align-items: center; /* centraliza horizontalmente */
+  gap: 1rem; /* espaçamento entre elementos */
+}
+
+.footer_bottom p {
+  font-size: 0.85rem; /* tamanho pequeno para texto inferior */
+  color: var(--white); /* cor do texto */
+}
+
+.footer_bottom .social-icons {
+  display: flex; /* ícones sociais em linha */
+  gap: 1.5rem; /* espaçamento entre ícones */
+}
+
+.footer_bottom .social-icons a {
+  color: var(--secondary); /* cor padrão dos ícones sociais */
+  font-size: 1.5rem; /* tamanho dos ícones */
+  transition: all 0.3s; /* transição para hover */
+}
+
+.footer_bottom .social-icons a:hover {
+  color: var(--primary); /* cor no hover */
+  transform: scale(1.15); /* ligeiro aumento no hover */
+}
+
+/* ================================
+   RESPONSIVIDADE
+   ================================ */
+@media (max-width: 768px) {
+  .footer_content {
+    grid-template-columns: 1fr; /* transforma colunas em uma única coluna no mobile */
+    text-align: center; /* centraliza conteúdo do footer no mobile */
+  }
+  .footer_bottom .social-icons {
+    justify-content: center; /* centraliza ícones sociais no mobile */
+  }
+  .nav {
+    display: none; /* esconde menu principal no mobile (usar .nav_toggle) */
+  }
+  .nav_toggle {
+    display: block; /* mostra o botão de toggle para o menu (JS deve controlar abertura) */
+  }
+  .grid {
+    grid-template-columns: 1fr; /* cards em coluna no mobile */
+    gap: 1.5rem; /* reduz o gap para mobile */
+    padding-inline: 1rem; /* padding nas laterais no mobile */
+  }
+  .hero_title { font-size: 2.5rem; } /* ajusta tamanho do título no mobile */
+  .hero_subtitle { font-size: 1.1rem;} /* ajusta subtítulo no mobile */
+}
